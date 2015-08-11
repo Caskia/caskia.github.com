@@ -142,7 +142,105 @@
       }
     </style></head><body data-spy="scroll" data-target="#sidebar"><div class="container"><div class="row"><div class="col-md-9" role="main"><div class="page-header"><h1>sparxo API documentation <small>version 1.0</small></h1><p>https://api.sparxo.com/1.0</p><h3 id="response"><a href="#response">response</a></h3><p>绝大部分接口的响应类型为 application/json。此时，响应的JSON对象中都包含一个 <code>code</code> 字段，这用于标识请求成功与否：</p><ol><li><p><code>code</code> 为 0，此时成功执行了请求。 对应的数据位于<code>data</code>字段。 它的具体类型跟接口有关。</p><p>如：</p><pre><code>{"code": 0, "data": []}
 </code></pre></li><li><p><code>code</code> 不为 0，此时请求未能正常完成。 对应的错误信息位于<code>msg</code>字段。 它的类型为object。</p><p>如：</p><pre><code>{"code": 999, "msg": {"captcha": "缺少验证码"}}
-</code></pre></li></ol><h3 id="response-code"><a href="#response-code">response-code</a></h3><p>返回代码对照表</p><table class="table table-striped table-bordered table-hover"><thead><tr><th>错误代码</th><th>类型</th><th>描述</th></tr></thead><tbody><tr><td>0</td><td>基本</td><td>成功</td></tr><tr><td>1</td><td>基本</td><td>失败</td></tr><tr><td>10001</td><td>系统</td><td>验证码错误</td></tr><tr><td>10002</td><td>系统</td><td>验证码过期</td></tr><tr><td>20001</td><td>用户</td><td>用户名不可用</td></tr><tr><td>20002</td><td>用户</td><td>邮箱不可用</td></tr><tr><td>20003</td><td>用户</td><td>注册激活码过期</td></tr><tr><td>20004</td><td>用户</td><td>重置密码链接失效</td></tr><tr><td>20005</td><td>用户</td><td>用户已激活</td></tr><tr><td>20006</td><td>用户</td><td>用户密码错误</td></tr></tbody></table></div><div class="panel panel-default"><div class="panel-heading"><h3 id="account" class="panel-title">账户</h3></div><div class="panel-body"><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_account"><span class="parent"></span>/account</a> <span class="methods"><a href="#account_get"><span class="badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span></a></span></h4></div><div id="panel_account" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#account_get'" class="list-group-item"><span class="badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span><div class="method_description"><p>获取账户列表</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="account_get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span> <span class="parent"></span>/account</h4></div><div class="modal-body"><div class="alert alert-info"><p>获取账户列表</p></div><div class="alert alert-warning"><span class="glyphicon glyphicon-lock" title="Authentication required"></span> Secured by oauth_2_0</div><ul class="nav nav-tabs"><li class="active"><a href="#account_get_request" data-toggle="tab">Request</a></li><li><a href="#account_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="account_get_request"><h3>Query Parameters</h3><ul><li><strong>next_id</strong>: <em>(integer)</em><p>请求的起始id</p></li><li><strong>count</strong>: <em>(integer)</em><p>请求的数据数量</p></li><li><strong>email</strong>: <em>(string)</em><p>激活账号的email地址</p></li></ul></div><div class="tab-pane" id="account_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+</code></pre></li></ol><h3 id="response-code"><a href="#response-code">response-code</a></h3><p>返回代码对照表</p><table><thead><tr><th>错误代码</th><th>类型</th><th>描述</th></tr></thead><tbody><tr><td>0</td><td>基本</td><td>成功</td></tr><tr><td>1</td><td>基本</td><td>失败</td></tr><tr><td>10001</td><td>系统</td><td>验证码错误</td></tr><tr><td>10002</td><td>系统</td><td>验证码过期</td></tr><tr><td>20001</td><td>用户</td><td>用户名不可用</td></tr><tr><td>20002</td><td>用户</td><td>邮箱不可用</td></tr><tr><td>20003</td><td>用户</td><td>注册激活码过期</td></tr><tr><td>20004</td><td>用户</td><td>重置密码链接失效</td></tr><tr><td>20005</td><td>用户</td><td>用户已激活</td></tr><tr><td>20006</td><td>用户</td><td>用户密码错误</td></tr></tbody></table><h3 id="socket-send"><a href="#socket-send">socket-send</a></h3><p><strong>一对一聊天发送信息</strong></p><pre><code>{
+    "type": "chat-single",
+    "to_user_id": 1123,
+    "data": {
+        "content": "hello",
+        "type": "text"
+}
+</code></pre><p><strong>聊天室发送信息</strong></p><pre><code>{
+    "type": "chat-room",
+    "room_id": 123,
+    "data": {
+        "content": "hello",
+        "type": "text"
+    }
+}
+</code></pre><p><strong>一对一消息已收到</strong></p><pre><code>{
+    "type": "chat-single",
+    "max_message_id": 1234,
+    "from_user_id": 112
+}
+</code></pre><p><strong>聊天室消息已收到</strong></p><pre><code>{
+    "type": "chat-room",
+    "max_message_id": 1234,
+    "room_id": 112
+}
+</code></pre><p><strong>系统消息已收到</strong></p><pre><code>{
+    "type": "system",
+    "max_message_id": 1234
+}
+</code></pre><h3 id="socket-push"><a href="#socket-push">socket-push</a></h3><p><strong>一对一聊天信息推送</strong></p><pre><code>{
+    "message_id": 123,
+    "create_time": "2015-07-08 12:11:11",
+    "type": "chat-single",
+    "from_user_id": 1123,
+    "data": {
+        "content": "hello",
+        "type": "text"
+    }
+}
+</code></pre><p><strong>聊天室信息推送</strong></p><pre><code>{
+    "message_id": 123,
+    "create_time": "2015-07-08 12:11:11",
+    "type": "chat-room",
+    "room_id": 123,
+    "data": {
+        "content": "hello",
+        "type": "text"
+    }
+}
+</code></pre><p><strong>系统好友邀请推送</strong></p><pre><code>{
+    "message_id": 111,
+    "create_time": "2015-07-08 12:11:11",
+    "type": "system",
+    "data": {
+        "type": "friend-invite",
+        "content": {
+            "id": 121,
+            "username": "lily",
+            "avatar": "http://aws.sparxo.amzon.com/1.jpg"
+        }
+    }
+}
+</code></pre><p><strong>系统好友邀请成功推送</strong></p><pre><code>{
+    "message_id": 102,
+    "create_time": "2015-07-08 12:11:11",
+    "type": "system",
+    "data": {
+        "type": "friend-invite-success",
+        "content": {
+            "id": 121,
+            "username": "lily",
+            "avatar": "http://aws.sparxo.amzon.com/1.jpg"
+        }
+    }
+}
+</code></pre><p><strong>系统活动即将开始提醒推送</strong></p><pre><code>{
+    "message_id": 101,
+    "create_time": "2015-07-08 12:11:11",
+    "type": "system",
+    "data": {
+        "type": "event-alert",
+        "content": {
+            "id": 121,
+            "name": "lily",
+            "image_url": "http://aws.sparxo.amzon.com/1.jpg",
+            "begin-time": "2015-07-08 12:11:11",
+            "end-time": "2015-07-09 12:11:11"
+        }
+    }
+}
+</code></pre><h3 id="ios-push"><a href="#ios-push">ios-push</a></h3><p><strong>APNS通知</strong></p><pre><code>{
+    "aps": {
+        "alert": "you have one more message to read",
+        "badge": 0,
+        "sound": ""
+    },
+    "extension": {}
+}
+</code></pre></div><div class="panel panel-default"><div class="panel-heading"><h3 id="account" class="panel-title">账户</h3></div><div class="panel-body"><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_account"><span class="parent"></span>/account</a> <span class="methods"><a href="#account_get"><span class="badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span></a></span></h4></div><div id="panel_account" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#account_get'" class="list-group-item"><span class="badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span><div class="method_description"><p>获取账户列表</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="account_get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span> <span class="parent"></span>/account</h4></div><div class="modal-body"><div class="alert alert-info"><p>获取账户列表</p></div><div class="alert alert-warning"><span class="glyphicon glyphicon-lock" title="Authentication required"></span> Secured by oauth_2_0</div><ul class="nav nav-tabs"><li class="active"><a href="#account_get_request" data-toggle="tab">Request</a></li><li><a href="#account_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="account_get_request"><h3>Query Parameters</h3><ul><li><strong>next_id</strong>: <em>(integer)</em><p>请求的起始id</p></li><li><strong>count</strong>: <em>(integer)</em><p>请求的数据数量</p></li><li><strong>email</strong>: <em>(string)</em><p>激活账号的email地址</p></li></ul></div><div class="tab-pane" id="account_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
   "code": 0,
   "data": {
     "next_id": 1233,
@@ -1446,42 +1544,254 @@
   "code": 0,
   "data": 4585
 }
-</code></pre></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="messages" class="panel-title">消息</h3></div><div class="panel-body"><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_messages"><span class="parent"></span>/messages</a> <span class="methods"><a href="#messages_get"><span class="badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span></a> <a href="#messages_post"><span class="badge badge_post">post <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span></a></span></h4></div><div id="panel_messages" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#messages_get'" class="list-group-item"><span class="badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span><div class="method_description"><p>获取消息列表</p></div><div class="clearfix"></div></div><div onclick="window.location.href = '#messages_post'" class="list-group-item"><span class="badge badge_post">post <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span><div class="method_description"><p>发送消息</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="messages_get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span> <span class="parent"></span>/messages</h4></div><div class="modal-body"><div class="alert alert-info"><p>获取消息列表</p></div><div class="alert alert-warning"><span class="glyphicon glyphicon-lock" title="Authentication required"></span> Secured by oauth_2_0</div><ul class="nav nav-tabs"><li class="active"><a href="#messages_get_request" data-toggle="tab">Request</a></li><li><a href="#messages_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="messages_get_request"><h3>Query Parameters</h3><ul><li><strong>next_id</strong>: <em>(integer)</em><p>请求的起始id</p></li><li><strong>count</strong>: <em>(integer)</em><p>请求的数据数量</p></li></ul></div><div class="tab-pane" id="messages_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+</code></pre></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="messages" class="panel-title">消息</h3></div><div class="panel-body"><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_messages"><span class="parent"></span>/messages</a> <span class="methods"><a href="#messages_get"><span class="badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span></a></span></h4></div><div id="panel_messages" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#messages_get'" class="list-group-item"><span class="badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span><div class="method_description"><p>获取消息列表</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="messages_get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span> <span class="parent"></span>/messages</h4></div><div class="modal-body"><div class="alert alert-info"><p>获取消息列表</p></div><div class="alert alert-warning"><span class="glyphicon glyphicon-lock" title="Authentication required"></span> Secured by oauth_2_0</div><ul class="nav nav-tabs"><li class="active"><a href="#messages_get_request" data-toggle="tab">Request</a></li><li><a href="#messages_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="messages_get_request"><h3>Query Parameters</h3><ul><li><strong>next_id</strong>: <em>(integer)</em><p>请求的起始id</p></li><li><strong>count</strong>: <em>(integer)</em><p>请求的数据数量</p></li><li><strong>userId</strong>: <em>required (integer)</em><p>用户id</p></li><li><strong>type</strong>: <em>(one of chat-single, chat-room, system)</em><p>消息类型</p></li></ul></div><div class="tab-pane" id="messages_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
   "code": 0,
   "data": {
     "next_id": 1233,
     "total": 1111,
     "count": 100,
     "list": [
-  {
-    "id": 1,
-    "create_time": "2015-10-10 0:0:0",
-    "content": "hello",
-    "type": 0,
-    "user": {
-        "id": 23,
-        "name": "user-1",
-        "avatar": "http://sparxo.com/33.jpg",
-        "has_scratched": true
-    }
-  },
-  { ... }
+	{
+		"contents": [
+			{
+				"message_id": 123,
+				"create_time": "2015-07-08 12:11:11",
+				"data": {
+					"type": "text",
+					"content": "it&#39;s a nice day"
+				}
+			},
+			{
+				"message_id": 122,
+				"create_time": "2015-07-08 12:11:10",
+				"data": {
+					"type": "text",
+					"content": "it&#39;s a nice day"
+				}
+			}
+		],
+		"type": "chat-single",
+		"unread_count": 12,
+		"from_user_id": 123465,
+		"next_id": 121
+	},
+	{
+		"contents": [
+			{
+				"message_id": 121,
+				"create_time": "2015-07-08 12:11:11",
+				"data": {
+					"type": "text",
+					"content": "it&#39;s a nice day"
+				}
+			},
+			{
+				"message_id": 120,
+				"create_time": "2015-07-08 12:11:10",
+				"data": {
+					"type": "text",
+					"content": "it&#39;s a nice day"
+				}
+			}
+		],
+		"type": "chat-room",
+		"unread_count": 12,
+		"room_id": 142,
+		"next_id": 121
+	},
+	{
+		"contents": [
+			{
+				"message_id": 111,
+				"create_time": "2015-07-08 12:11:11",
+				"data": {
+					"type": "friend-invite",
+					"content": {
+						"id": 121,
+						"username": "lily",
+						"avatar": "http://aws.sparxo.amzon.com/1.jpg"
+					}
+				}
+			},
+			{
+				"message_id": 102,
+				"create_time": "2015-07-08 12:11:11",
+				"data": {
+					"type": "friend-invite-success",
+					"content": {
+						"id": 121,
+						"username": "lily",
+						"avatar": "http://aws.sparxo.amzon.com/1.jpg"
+					}
+				}
+			},
+			{
+				"message_id": 101,
+				"create_time": "2015-07-08 12:11:11",
+				"data": {
+					"type": "event-alert",
+					"content": {
+						"id": 121,
+						"name": "lily",
+						"image_url": "http://aws.sparxo.amzon.com/1.jpg",
+						"begin-time": "2015-07-08 12:11:11",
+						"end-time": "2015-07-09 12:11:11"
+					}
+				}
+			}
+		],
+		"type": "system"
+	}
 ]
   }
 }
-</code></pre></div></div></div></div></div></div><div class="modal fade" tabindex="0" id="messages_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span> <span class="parent"></span>/messages</h4></div><div class="modal-body"><div class="alert alert-info"><p>发送消息</p></div><div class="alert alert-warning"><span class="glyphicon glyphicon-lock" title="Authentication required"></span> Secured by oauth_2_0</div><ul class="nav nav-tabs"><li class="active"><a href="#messages_post_request" data-toggle="tab">Request</a></li></ul><div class="tab-content"><div class="tab-pane active" id="messages_post_request"><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
-  "Content": "abc"
-  
-}</code></pre></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="oauth2" class="panel-title">oauth2认证授权</h3></div><div class="panel-body"><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_oauth2_access_token"><span class="parent">/oauth2</span>/access_token</a> <span class="methods"><a href="#oauth2_access_token_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_oauth2_access_token" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#oauth2_access_token_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>账号认证获取access_token</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="oauth2_access_token_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/oauth2</span>/access_token</h4></div><div class="modal-body"><div class="alert alert-info"><p>账号认证获取access_token</p></div><ul class="nav nav-tabs"><li class="active"><a href="#oauth2_access_token_post_request" data-toggle="tab">Request</a></li><li><a href="#oauth2_access_token_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="oauth2_access_token_post_request"><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
-  "user_name": "caskia",
+</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_messages_unread"><span class="parent">/messages</span>/unread</a> <span class="methods"><a href="#messages_unread_get"><span class="badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span></a></span></h4></div><div id="panel_messages_unread" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#messages_unread_get'" class="list-group-item"><span class="badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span><div class="method_description"><p>获取未读消息列表</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="messages_unread_get"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_get">get <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span> <span class="parent">/messages</span>/unread</h4></div><div class="modal-body"><div class="alert alert-info"><p>获取未读消息列表</p></div><div class="alert alert-warning"><span class="glyphicon glyphicon-lock" title="Authentication required"></span> Secured by oauth_2_0</div><ul class="nav nav-tabs"><li class="active"><a href="#messages_unread_get_request" data-toggle="tab">Request</a></li><li><a href="#messages_unread_get_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="messages_unread_get_request"><h3>Query Parameters</h3><ul><li><strong>next_id</strong>: <em>(integer)</em><p>请求的起始id</p></li><li><strong>count</strong>: <em>(integer)</em><p>请求的数据数量</p></li><li><strong>userId</strong>: <em>required (integer)</em><p>用户id</p></li></ul></div><div class="tab-pane" id="messages_unread_get_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+  "code": 0,
+  "data": {
+    "next_id": 1233,
+    "total": 1111,
+    "count": 100,
+    "list": [
+	{
+		"contents": [
+			{
+				"message_id": 123,
+				"create_time": "2015-07-08 12:11:11",
+				"data": {
+					"type": "text",
+					"content": "it&#39;s a nice day"
+				}
+			},
+			{
+				"message_id": 122,
+				"create_time": "2015-07-08 12:11:10",
+				"data": {
+					"type": "text",
+					"content": "it&#39;s a nice day"
+				}
+			}
+		],
+		"type": "chat-single",
+		"unread_count": 12,
+		"from_user_id": 123465,
+		"next_id": 121
+	},
+	{
+		"contents": [
+			{
+				"message_id": 121,
+				"create_time": "2015-07-08 12:11:11",
+				"data": {
+					"type": "text",
+					"content": "it&#39;s a nice day"
+				}
+			},
+			{
+				"message_id": 120,
+				"create_time": "2015-07-08 12:11:10",
+				"data": {
+					"type": "text",
+					"content": "it&#39;s a nice day"
+				}
+			}
+		],
+		"type": "chat-room",
+		"unread_count": 12,
+		"room_id": 142,
+		"next_id": 121
+	},
+	{
+		"contents": [
+			{
+				"message_id": 111,
+				"create_time": "2015-07-08 12:11:11",
+				"data": {
+					"type": "friend-invite",
+					"content": {
+						"id": 121,
+						"username": "lily",
+						"avatar": "http://aws.sparxo.amzon.com/1.jpg"
+					}
+				}
+			},
+			{
+				"message_id": 102,
+				"create_time": "2015-07-08 12:11:11",
+				"data": {
+					"type": "friend-invite-success",
+					"content": {
+						"id": 121,
+						"username": "lily",
+						"avatar": "http://aws.sparxo.amzon.com/1.jpg"
+					}
+				}
+			},
+			{
+				"message_id": 101,
+				"create_time": "2015-07-08 12:11:11",
+				"data": {
+					"type": "event-alert",
+					"content": {
+						"id": 121,
+						"name": "lily",
+						"image_url": "http://aws.sparxo.amzon.com/1.jpg",
+						"begin-time": "2015-07-08 12:11:11",
+						"end-time": "2015-07-09 12:11:11"
+					}
+				}
+			}
+		],
+		"type": "system"
+	}
+]
+  }
+}
+</code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_messages_read"><span class="parent">/messages</span>/read</a> <span class="methods"><a href="#messages_read_post"><span class="badge badge_post">post <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span></a></span></h4></div><div id="panel_messages_read" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#messages_read_post'" class="list-group-item"><span class="badge badge_post">post <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span><div class="method_description"><p>发送已读消息消息</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="messages_read_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post <span class="glyphicon glyphicon-lock" title="Authentication required"></span></span> <span class="parent">/messages</span>/read</h4></div><div class="modal-body"><div class="alert alert-info"><p>发送已读消息消息</p></div><div class="alert alert-warning"><span class="glyphicon glyphicon-lock" title="Authentication required"></span> Secured by oauth_2_0</div><ul class="nav nav-tabs"><li class="active"><a href="#messages_read_post_request" data-toggle="tab">Request</a></li><li><a href="#messages_read_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="messages_read_post_request"><h3>Query Parameters</h3><ul><li><strong>userId</strong>: <em>required (integer)</em><p>用户id</p></li></ul><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>[
+	{
+		"type": "chat-single",
+		"max_message_id": 1234,
+		"from_user_id": 112
+	},
+	{
+		"type": "chat-room",
+		"max_message_id": 1234,
+		"room_id": 112
+	},
+	{
+		"type": "system",
+		"max_message_id": 1234
+	}
+]</code></pre></div><div class="tab-pane" id="messages_read_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>code <a href="http://caskia.github.io/sparxo-api.html#response-code">http://caskia.github.io/sparxo-api.html#response-code</a></p><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Schema</strong>:</p><pre><code>{
+  "$schema": "http://json-schema.org/draft-04/schema#",
+  "title": "ExampleResponse",
+  "type": "object",
+  "properties": {
+    "code": {
+      "type": "integer",
+      "description": "0 is OK"
+    },
+    "msg": {
+      "type": "object",
+      "description": "Reason of failure"
+    }
+  },
+  "required": ["code"]
+}</code></pre><p><strong>Example</strong>:</p><pre><code>{
+  "code": 0
+}
+</code></pre></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="oauth2" class="panel-title">OAuth2认证授权</h3></div><div class="panel-body"><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_oauth2_access_token"><span class="parent">/oauth2</span>/access_token</a> <span class="methods"><a href="#oauth2_access_token_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_oauth2_access_token" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#oauth2_access_token_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>账号认证获取access_token</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="oauth2_access_token_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/oauth2</span>/access_token</h4></div><div class="modal-body"><div class="alert alert-info"><p>账号认证获取access_token</p></div><ul class="nav nav-tabs"><li class="active"><a href="#oauth2_access_token_post_request" data-toggle="tab">Request</a></li><li><a href="#oauth2_access_token_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="oauth2_access_token_post_request"><h3>Headers</h3><ul><li><strong>Authorization</strong>: <em>required (string)</em><p>client_id 与 client_secret的Base64认证，&#39;Basic &#39;+ Base64(client_id+&#39;:&#39;+client_secret)</p><p><strong>Example</strong>:</p><pre>Basic MTpkMDVkZDY3ZC0xM2U5LTRiMTctOTgxMi1jYTQ4NzMwZDViNTg=</pre></li></ul><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+  "username": "caskia",
   "password": "12123qwezxcd",
-  "grant_type": "password"
+  "grant_type": "password",
+  //header中包含可省略
+  "client_id": "1",
+  "client_secret": "saddasdsa-sadsgd-dffsd-fsdfds"
 }</code></pre></div><div class="tab-pane" id="oauth2_access_token_post_response"><h2>HTTP status code <a href="http://httpstatus.es/200" target="_blank">200</a></h2><p>返回认证对象</p><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
   "code": 0,
   "data": {
 	"access_token": "2YotnFZFEjr1zCsicMWpAA",
-	"token_type": "",
-	"expires_in": 3600,
+	"token_type": "bearer",
+	"expires_in": 7200,
 	"refresh_token": "tGzv3JOkF0XG5Qx2TlKWIA"
 }
 }
@@ -1876,4 +2186,4 @@
 }</code></pre><p><strong>Example</strong>:</p><pre><code>{
   "code": 0
 }
-</code></pre></div></div></div></div></div></div></div></div></div></div></div><div class="col-md-3"><div id="sidebar" class="hidden-print affix" role="complementary"><ul class="nav nav-pills nav-stacked"><li><a href="#account">账户</a></li><li><a href="#events">活动</a></li><li><a href="#locations">位置</a></li><li><a href="#media">多媒体文件</a></li><li><a href="#messages">消息</a></li><li><a href="#oauth2">oauth2认证授权</a></li><li><a href="#orders">订单</a></li><li><a href="#tickets">用户购买的票</a></li><li><a href="#topics">话题</a></li><li><a href="#users">用户</a></li></ul></div></div></div></div></body></html>
+</code></pre></div></div></div></div></div></div></div></div></div></div></div><div class="col-md-3"><div id="sidebar" class="hidden-print affix" role="complementary"><ul class="nav nav-pills nav-stacked"><li><a href="#account">账户</a></li><li><a href="#events">活动</a></li><li><a href="#locations">位置</a></li><li><a href="#media">多媒体文件</a></li><li><a href="#messages">消息</a></li><li><a href="#oauth2">OAuth2认证授权</a></li><li><a href="#orders">订单</a></li><li><a href="#tickets">用户购买的票</a></li><li><a href="#topics">话题</a></li><li><a href="#users">用户</a></li></ul></div></div></div></div></body></html>
