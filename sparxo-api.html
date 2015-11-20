@@ -1,4 +1,4 @@
-<!DOCTYPE HTML><html><head><title>sparxo API documentation</title><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="generator" content="https://github.com/kevinrenskers/raml2html 2.0.2"><link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/default.min.css"><script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script><script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script type="text/javascript">
+<!DOCTYPE HTML><html><head><title>sparxo API documentation</title><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="generator" content="https://github.com/kevinrenskers/raml2html 2.1.2"><link rel="stylesheet" href="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/css/bootstrap.min.css"><link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/styles/default.min.css"><script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script><script type="text/javascript" src="https://netdna.bootstrapcdn.com/bootstrap/3.1.1/js/bootstrap.min.js"></script><script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/8.1/highlight.min.js"></script><script type="text/javascript">
       $(document).ready(function() {
         $('.page-header pre code, .top-resource-description pre code').each(function(i, block) {
           hljs.highlightBlock(block);
@@ -27,9 +27,11 @@
 
         // remove url fragment on modal hide
         $('.modal').on('hidden.bs.modal', function() {
-          if(history && history.replaceState) {
-            history.replaceState({}, '', '#');
-          }
+          try {
+            if (history && history.replaceState) {
+                history.replaceState({}, '', '#');
+            }
+          } catch(e) {}
         });
       });
     </script><style>
@@ -142,7 +144,7 @@
       }
     </style></head><body data-spy="scroll" data-target="#sidebar"><div class="container"><div class="row"><div class="col-md-9" role="main"><div class="page-header"><h1>sparxo API documentation <small>version 1.0</small></h1><p>https://api.sparxo.com/1.0</p><h3 id="response"><a href="#response">response</a></h3><p>绝大部分接口的响应类型为 application/json。此时，响应的JSON对象中都包含一个 <code>code</code> 字段，这用于标识请求成功与否：</p><ol><li><p><code>code</code> 为 0，此时成功执行了请求。 对应的数据位于<code>data</code>字段。 它的具体类型跟接口有关。</p><p>如：</p><pre><code>{"code": 0, "data": []}
 </code></pre></li><li><p><code>code</code> 不为 0，此时请求未能正常完成。 对应的错误信息位于<code>msg</code>字段。 它的类型为object。</p><p>如：</p><pre><code>{"code": 999, "msg": {"captcha": "缺少验证码"}}
-</code></pre></li></ol><h3 id="response-code"><a href="#response-code">response-code</a></h3><p>返回代码对照表</p><table><thead><tr><th>错误代码</th><th>类型</th><th>描述</th></tr></thead><tbody><tr><td>0</td><td>基本</td><td>成功</td></tr><tr><td>1</td><td>基本</td><td>失败</td></tr><tr><td>10001</td><td>系统</td><td>验证码错误</td></tr><tr><td>10002</td><td>系统</td><td>验证码过期</td></tr><tr><td>20001</td><td>用户</td><td>用户名不可用</td></tr><tr><td>20002</td><td>用户</td><td>邮箱不可用</td></tr><tr><td>20003</td><td>用户</td><td>注册激活码过期</td></tr><tr><td>20004</td><td>用户</td><td>重置密码链接失效</td></tr><tr><td>20005</td><td>用户</td><td>用户已激活</td></tr><tr><td>20006</td><td>用户</td><td>用户密码错误</td></tr></tbody></table><h3 id="socket-send"><a href="#socket-send">socket-send</a></h3><p><strong>一对一聊天发送信息</strong></p><pre><code>{
+</code></pre></li></ol><h3 id="response-code"><a href="#response-code">response-code</a></h3><p>返回代码对照表</p><table class="table"><thead><tr><th>错误代码</th><th>类型</th><th>描述</th></tr></thead><tbody><tr><td>0</td><td>基本</td><td>成功</td></tr><tr><td>1</td><td>基本</td><td>失败</td></tr><tr><td>10001</td><td>系统</td><td>验证码错误</td></tr><tr><td>10002</td><td>系统</td><td>验证码过期</td></tr><tr><td>20001</td><td>用户</td><td>用户名不可用</td></tr><tr><td>20002</td><td>用户</td><td>邮箱不可用</td></tr><tr><td>20003</td><td>用户</td><td>注册激活码过期</td></tr><tr><td>20004</td><td>用户</td><td>重置密码链接失效</td></tr><tr><td>20005</td><td>用户</td><td>用户已激活</td></tr><tr><td>20006</td><td>用户</td><td>用户密码错误</td></tr></tbody></table><h3 id="socket-send"><a href="#socket-send">socket-send</a></h3><p><strong>一对一聊天发送信息</strong></p><pre><code>{
     "type": "chat-single",
     "to_user_id": 1123,
     "data": {
@@ -532,6 +534,8 @@
 }
 </code></pre></div></div></div></div></div></div></div><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_account_signup_external"><span class="parent">/account</span>/signup_external</a> <span class="methods"><a href="#account_signup_external_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_account_signup_external" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#account_signup_external_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>外部账号注册</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="account_signup_external_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/account</span>/signup_external</h4></div><div class="modal-body"><div class="alert alert-info"><p>外部账号注册</p></div><ul class="nav nav-tabs"><li class="active"><a href="#account_signup_external_post_request" data-toggle="tab">Request</a></li><li><a href="#account_signup_external_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="account_signup_external_post_request"><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
  "username": "caskia",
+ "email":"123@berkeley.com",
+ "phone_number":"123-654546",
  "provider": "Facebook",
  "external_access_token": "CAAUnS1JkqLwBADnZCZCDYKej8ZC8PzvDQQvyW0AhqARtAXsZCpW7AQvjjQVZBN4L3hA5TtmqMZBilFS2Vch6i9BibkeyI3CCejp8wZCR3JmwaC0ChZC1rX09iol6iVntjUZBVTf8FD4zhMZAGIE7UH6tVFCBOiEnxt1d2fIN6fZBhTeBkaTBxcN8Io6ZBCZCXZBuiacAoZD",
  "role_name": "merchant"
@@ -1919,7 +1923,7 @@
   "error": null,
   "unAuthorizedRequest": false
 }
-</code></pre></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="oauth2" class="panel-title">OAuth2认证授权</h3></div><div class="panel-body"><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_oauth2_access_token"><span class="parent">/oauth2</span>/access_token</a> <span class="methods"><a href="#oauth2_access_token_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_oauth2_access_token" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#oauth2_access_token_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>账号认证获取access_token</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="oauth2_access_token_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/oauth2</span>/access_token</h4></div><div class="modal-body"><div class="alert alert-info"><p>账号认证获取access_token</p></div><ul class="nav nav-tabs"><li class="active"><a href="#oauth2_access_token_post_request" data-toggle="tab">Request</a></li><li><a href="#oauth2_access_token_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="oauth2_access_token_post_request"><h3>Headers</h3><ul><li><strong>Authorization</strong>: <em>required (string)</em><p>client_id 与 client_secret的Base64认证，&#39;Basic &#39;+ Base64(client_id+&#39;:&#39;+client_secret)</p><p><strong>Example</strong>:</p><pre>Basic MTpkMDVkZDY3ZC0xM2U5LTRiMTctOTgxMi1jYTQ4NzMwZDViNTg=</pre></li></ul><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
+</code></pre></div></div></div></div></div></div></div></div></div></div><div class="panel panel-default"><div class="panel-heading"><h3 id="oauth2" class="panel-title">OAuth2认证授权</h3></div><div class="panel-body"><div class="panel-group"><div class="panel panel-white"><div class="panel-heading"><h4 class="panel-title"><a class="collapsed" data-toggle="collapse" href="#panel_oauth2_access_token"><span class="parent">/oauth2</span>/access_token</a> <span class="methods"><a href="#oauth2_access_token_post"><span class="badge badge_post">post</span></a></span></h4></div><div id="panel_oauth2_access_token" class="panel-collapse collapse"><div class="panel-body"><div class="list-group"><div onclick="window.location.href = '#oauth2_access_token_post'" class="list-group-item"><span class="badge badge_post">post</span><div class="method_description"><p>账号认证获取access_token</p></div><div class="clearfix"></div></div></div></div></div><div class="modal fade" tabindex="0" id="oauth2_access_token_post"><div class="modal-dialog"><div class="modal-content"><div class="modal-header"><button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button><h4 class="modal-title" id="myModalLabel"><span class="badge badge_post">post</span> <span class="parent">/oauth2</span>/access_token</h4></div><div class="modal-body"><div class="alert alert-info"><p>账号认证获取access_token</p></div><ul class="nav nav-tabs"><li class="active"><a href="#oauth2_access_token_post_request" data-toggle="tab">Request</a></li><li><a href="#oauth2_access_token_post_response" data-toggle="tab">Response</a></li></ul><div class="tab-content"><div class="tab-pane active" id="oauth2_access_token_post_request"><h3>Headers</h3><ul><li><strong>Authorization</strong>: <em>required (string)</em><p>client_id 与 client_secret的Base64认证，&#39;Basic &#39;+ Base64(client_id+&#39;:&#39;+client_secret)</p><p><strong>Example</strong>:</p><pre>Basic MTpkMDVkZDY3ZC0xM2U5LTRiMTctOTgxMi1jYTQ4NzMwZDViNTg=</pre></li><li><strong>Content-Type</strong>: <em>required (string)</em><p>表单模式</p><p><strong>Example</strong>:</p><pre>application/x-www-form-urlencoded</pre></li></ul><h3>Body</h3><p><strong>Type: application/json</strong></p><p><strong>Example</strong>:</p><pre><code>{
   "username": "caskia",
   "password": "12123qwezxcd",
   "grant_type": "password",
@@ -1943,6 +1947,7 @@ or
 	"token_type": "bearer",
 	"expires_in": 7200,
 	"refresh_token": "tGzv3JOkF0XG5Qx2TlKWIA"
+  "user_id": 2
 },
   "error": null,
   "unAuthorizedRequest": false
@@ -1963,9 +1968,10 @@ or
   "result": {
     "access_token": "2E9tQYBj59gVLbJQ6YQVqguqB929-sH8t5pyIZUrnjpF9g3D1B3VcZliW2rCpk3YK3zFnQ4RqojrJUp2apiHX8nvaxCxh51rUGHP52JL1mqODrfOZKbatUeXKe3PFbTyjcZOZP7dyG6dGP4c7rIhZsxOROx2S-7a61D1hBsAYizElF6Gw_ywWPY9N-S8UN2w1Bq2u_3HgqEXcgt2HjT25rYA6AFa8jKFSQbkJRRI-UpjH39Ulb_BQohDST57-KwElpd66uZzsNqTW7e6ciLI_DRsQe8yI5l6auC37T5EBc6sZXC2qw8SqjfMheUtGZyIDPmzGA",
     ".expires": "2015/9/9 12:36:55 +00:00",
-    "expires_in": "7200",
+    "expires_in": 7200,
     ".issued": "2015/9/9 10:36:55 +00:00",
-    "token_type": "bearer"
+    "token_type": "bearer",
+    "user_id": 2
 },
   "error": null,
   "unAuthorizedRequest": false
